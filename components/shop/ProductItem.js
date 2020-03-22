@@ -1,10 +1,28 @@
 import React from 'react';
-import { View, Text, Image, Button, StyleSheet } from 'react-native';
+import { 
+    View, 
+    Text, 
+    Image, 
+    Button, 
+    StyleSheet,
+    TouchableOpacity,
+    TouchableNativeFeedback,
+    Platform
+ } from 'react-native';
 
 import Colors from '../../constants/Colors';
 
 const ProductItem = props => {
-    return <View style={styles.product}>
+    let TouchableCmp = TouchableOpacity;
+
+    if (Platform.OS === 'android' && Platform.Version >= 21){
+        TouchableCmp = TouchableNativeFeedback;
+    }
+
+    return (
+        <View style={styles.product}>
+        <TouchableCmp onPress={props.onViewDetail} useForeground>
+        <View>
         <View style={styles.imageContainer}>
             <Image style={styles.image} source={{uri: props.image}}/>
         </View>
@@ -16,7 +34,10 @@ const ProductItem = props => {
             <Button color={Colors.primary} title="View Details" onPress={props.onViewDetail}/>
             <Button color={Colors.primary} title="To Cart" onPress={props.onAddToCart}/>
         </View>
-    </View>
+        </View>
+      </TouchableCmp>
+      </View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -28,8 +49,13 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderRadius: 10,
         backgroundColor: 'white',
-        height: 300,
-        margin: 20
+        height: 310,
+        margin: 20,
+        overflow: 'hidden'
+    },
+    touchable: {
+        borderRadius: 10,
+        overflow: 'hidden'
     },
     imageContainer: {
         width: '100%',
@@ -46,10 +72,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
+        fontFamily: 'sitka-bold',
         fontSize: 18,
         marginVertical: 4
     },
     price: {
+        fontFamily: 'sitka',
         fontSize: 14,
         color: '#888',
         paddingLeft: 10
