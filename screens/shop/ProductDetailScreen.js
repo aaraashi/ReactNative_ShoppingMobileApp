@@ -3,6 +3,7 @@ import { ScrollView, View, Text, Image, Button, StyleSheet} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import * as cartActions from '../../store/actions/cart';
+import DefaultButton from '../../components/UI/DefaultButton';
 
 const ProductDetailScreen = props => {
     const productId = props.navigation.getParam('productId');
@@ -15,7 +16,7 @@ const ProductDetailScreen = props => {
     <ScrollView>
         <Image style={styles.image} source={{uri: selectedProduct.imageURL}} />
         <View style={styles.actions}>
-        <Button color={Colors.primary} title="Add to Cart" onPress={()=>{
+        <DefaultButton color={Colors.primary} title="Add to Cart" onPress={()=>{
             dispatch(cartActions.addToCart(selectedProduct));
         }}/>
         </View>
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
         height: 300
     },
     actions: {
-        marginVertical: 10,
+        marginTop: 30,
         alignItems: 'center'
     },
     price: {
