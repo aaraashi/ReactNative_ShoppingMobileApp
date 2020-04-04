@@ -3,14 +3,13 @@ import {
     View, 
     Text, 
     Image, 
-    Button, 
     StyleSheet,
     TouchableOpacity,
     TouchableNativeFeedback,
     Platform
  } from 'react-native';
 
-import Colors from '../../constants/Colors';
+ import Card from '../UI/Card';
 
 const ProductItem = props => {
     let TouchableCmp = TouchableOpacity;
@@ -20,8 +19,9 @@ const ProductItem = props => {
     }
 
     return (
-        <View style={styles.product}>
-        <TouchableCmp onPress={props.onViewDetail} useForeground>
+        <Card style={styles.product}>
+        <View style={styles.touchable}>
+        <TouchableCmp onPress={props.onSelect} useForeground>
         <View>
         <View style={styles.imageContainer}>
             <Image style={styles.image} source={{uri: props.image}}/>
@@ -31,27 +31,19 @@ const ProductItem = props => {
             <Text style={styles.price}>${props.price.toFixed(2)}</Text>
         </View>
         <View style={styles.actions}>
-            <Button color={Colors.primary} title="View Details" onPress={props.onViewDetail}/>
-            <Button color={Colors.primary} title="To Cart" onPress={props.onAddToCart}/>
+            {props.children}
         </View>
         </View>
       </TouchableCmp>
       </View>
+      </Card>
     );
 };
 
 const styles = StyleSheet.create({
     product: {
-        shadowColor: 'black',
-        shadowOpacity: 0.26,
-        shadowOffset: {width: 0.5, height: 2},
-        shadowRadius: 8,
-        elevation: 5,
-        borderRadius: 10,
-        backgroundColor: 'white',
-        height: 310,
-        margin: 20,
-        overflow: 'hidden'
+        height: 280,
+        margin: 16
     },
     touchable: {
         borderRadius: 10,
@@ -80,15 +72,16 @@ const styles = StyleSheet.create({
         fontFamily: 'sitka',
         fontSize: 14,
         color: '#888',
-        paddingLeft: 10
+        paddingLeft: 10,
+        marginBottom: -10
     },
     actions: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         height: '25%',
-        paddingLeft: 10,
-        paddingRight: 10
+        paddingLeft: 20,
+        paddingRight: 20
     }
 });
 
